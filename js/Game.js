@@ -104,7 +104,7 @@ function create() {
 
     for (i = 63; i > 39; i--) {
         if (tabuleiro[i].Cor == 1) {
-            pecas = game.add.button(tabuleiro[i].PosicaoX + 6, tabuleiro[i].PosicaoY + 5, 'pecaAzulDama', actionOnClick, this, 2, 1, 0);
+            pecas = game.add.button(tabuleiro[i].PosicaoX + 6, tabuleiro[i].PosicaoY + 5, 'pecaAzul', actionOnClick, this, 2, 1, 0);
             pecas.data.Descricao = {
                 Tipo: 'Comum',
                 Cor: 'Azul',
@@ -191,8 +191,9 @@ function actionOnClick(peca) {
             }
         }
 
-    }else{
-        if (!tabuleiro[IDCasaTab + 9].Ocupado && !(CasaNaoSelecionaveisDireita.indexOf(IDCasaTab) > -1)) {
+    }//Final Peça azul
+    else{//Inicio Peça
+        if (!tabuleiro[IDCasaTab + 9].Ocupado && !(CasaNaoSelecionaveisDireita.indexOf(IDCasaTab) > -1) ) {
             AuxCasaSel = game.add.button(tabuleiro[IDCasaTab + 9].PosicaoX, tabuleiro[IDCasaTab + 9].PosicaoY, 'casaSelecionada', actionSelecionarCasa, this, 2, 1, 0);
             posicaoID = IDCasaTab + 9;
 
@@ -234,7 +235,7 @@ function actionSelecionarCasa(casa) {
     casa.data.Descricao.PecaId.data.Descricao.X = tabuleiro[casa.data.Descricao.PosicaoId].PosicaoX;
     casa.data.Descricao.PecaId.data.Descricao.Y = tabuleiro[casa.data.Descricao.PosicaoId].PosicaoY;
     tabuleiro[casa.data.Descricao.PecaId.data.Descricao.IDCasa].Ocupado = false;
-    //tabuleiro[casa.data.Descricao.PecaId.data.Descricao.IDCasa].Peca = null;
+    tabuleiro[casa.data.Descricao.PecaId.data.Descricao.IDCasa].Peca = null;
     casa.data.Descricao.PecaId.data.Descricao.IDCasa = casa.data.Descricao.PosicaoId;
     tabuleiro[casa.data.Descricao.PecaId.data.Descricao.IDCasa].Ocupado = true;
     tabuleiro[casa.data.Descricao.PecaId.data.Descricao.IDCasa].Peca = casa.data.Descricao.PecaId;
