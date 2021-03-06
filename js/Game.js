@@ -6,6 +6,7 @@ function preload() {
     game.load.image('casaPreta', 'assetsDama/CasaPreta.png');
     game.load.image('casaBranca', 'assetsDama/CasaBranca.png');
     game.load.image('pecaAzul', 'assetsDama/PecaAzul.png');
+    game.load.image('pecaAzulDama', 'assetsDama/DamaAzul.png');
     game.load.image('pecaLaranja', 'assetsDama/PecaLaranja.png');
     game.load.image('casaSelecionada', 'assetsDama/casaSelecionada.png');
 }
@@ -103,7 +104,7 @@ function create() {
 
     for (i = 63; i > 39; i--) {
         if (tabuleiro[i].Cor == 1) {
-            pecas = game.add.button(tabuleiro[i].PosicaoX + 6, tabuleiro[i].PosicaoY + 5, 'pecaAzul', actionOnClick, this, 2, 1, 0);
+            pecas = game.add.button(tabuleiro[i].PosicaoX + 6, tabuleiro[i].PosicaoY + 5, 'pecaAzulDama', actionOnClick, this, 2, 1, 0);
             pecas.data.Descricao = {
                 Tipo: 'Comum',
                 Cor: 'Azul',
