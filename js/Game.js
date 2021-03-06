@@ -143,10 +143,10 @@ function actionOnClick(peca) {
             casaSel.push(AuxCasaSel);
         }    
         else {
-            if (!tabuleiro[IDCasaTab - 14].Ocupado  && !(CasaNaoSelecionaveisDireita.indexOf(IDCasaTab) > -1) && tabuleiro[IDCasaTab - 7].Peca.PecaCor=='Laranja'){
+            if (!tabuleiro[IDCasaTab - 14].Ocupado  && !(CasaNaoSelecionaveisDireita.indexOf(IDCasaTab) > -1) && tabuleiro[IDCasaTab - 7].Peca.data.Descricao.Cor=='Laranja'){
                 AuxCasaSel = game.add.button(tabuleiro[IDCasaTab - 14].PosicaoX, tabuleiro[IDCasaTab - 14].PosicaoY, 'casaSelecionada', actionSelecionarCasa, this, 2, 1, 0);
                 posicaoID = IDCasaTab - 14;
-    
+                console.log("Matando Peças Direita");
                 AuxCasaSel.data.Descricao = {
                     PecaId: peca,
                     PecaCor: 'Azul',
@@ -175,10 +175,10 @@ function actionOnClick(peca) {
     
             casaSel.push(AuxCasaSel);
         }else {
-            if (!tabuleiro[IDCasaTab - 16].Ocupado  && !(CasaNaoSelecionaveisDireita.indexOf(IDCasaTab) > -1)&& tabuleiro[IDCasaTab - 9].Peca.PecaCor=='Laranja'){
-                AuxCasaSel = game.add.button(tabuleiro[IDCasaTab - 16].PosicaoX, tabuleiro[IDCasaTab - 16].PosicaoY, 'casaSelecionada', actionSelecionarCasa, this, 2, 1, 0);
-                posicaoID = IDCasaTab - 16;
-    
+            if (!tabuleiro[IDCasaTab - 18].Ocupado  && !(CasaNaoSelecionaveisDireita.indexOf(IDCasaTab) > -1)&& tabuleiro[IDCasaTab - 9].Peca.data.Descricao.Cor=='Laranja'){
+                AuxCasaSel = game.add.button(tabuleiro[IDCasaTab - 18].PosicaoX, tabuleiro[IDCasaTab - 18].PosicaoY, 'casaSelecionada', actionSelecionarCasa, this, 2, 1, 0);
+                posicaoID = IDCasaTab - 18;
+                console.log("Matando Peças Esquerda");
                 AuxCasaSel.data.Descricao = {
                     PecaId: peca,
                     PecaCor: 'Azul',
@@ -225,7 +225,7 @@ function actionOnClick(peca) {
 function actionSelecionarCasa(casa) {
     
     if(casa.data.Descricao.Status == "matar"){
-        pecaMorta.push(  tabuleiro[casa.data.Descricao.PosicaoId].Peca)
+        pecaMorta.push( tabuleiro[casa.data.Descricao.Vitima].Peca )
         tabuleiro[casa.data.Descricao.Vitima].Ocupado=false;
         tabuleiro[casa.data.Descricao.Vitima].Ocupado=false;
         pecaMorta.forEach(function (item) { item.kill(); });
