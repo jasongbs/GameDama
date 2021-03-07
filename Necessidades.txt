@@ -1,0 +1,4 @@
+1- Corrigir quando chegar na borda do tabuleiro 
+2 - Transformar peça comum em dama.
+1- Logica da Dama
+2- Controle de vezes.. uma vez de cada.
