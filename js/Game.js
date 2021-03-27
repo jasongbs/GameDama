@@ -390,55 +390,46 @@ function actionOnClick(peca, a, b, c) {
     }//Final Peça Laranja
     else if (tipo == "Dama") {
         var DiagonalCima, Diagonal = 9, DamaAndar = true;
+
+
+        var STOP=false;
+
         do {//Desenha as casas para diagonal direita baixo
 
-            if (CasaNaoSelecionaveisDireita.indexOf(IDCasaTab) == -1 && LimitesTabuleiroBaixo.indexOf(IDCasaTab) == -1 ) {//[7, 23, 39, 55]
-       
-                console.log("Selecionando Cada Direita Baixo ..." + (IDCasaTab + Diagonal))
-                    if (!tabuleiro[IDCasaTab + Diagonal].Ocupado ) {
-                        AuxCasaSel = game.add.button(tabuleiro[IDCasaTab + Diagonal].PosicaoX, tabuleiro[IDCasaTab + Diagonal].PosicaoY, 'casaSelecionada', actionSelecionarCasa, this, 2, 1, 0);
-                        posicaoID = IDCasaTab + Diagonal;
+            if (CasaNaoSelecionaveisDireita.indexOf(IDCasaTab ) == -1 && LimitesTabuleiroBaixo.indexOf(IDCasaTab ) == -1 ) {//[7, 23, 39, 55]
+                if(tabuleiro[IDCasaTab + Diagonal].Ocupado == true  ){//matar
+           //     console.log("Selecionando Cada Direita Baixo ..." + (IDCasaTab + Diagonal))
+                    if (CasaNaoSelecionaveisParaMatarDireita.indexOf(IDCasaTab + Diagonal) == -1 ){
+                            
+                            if(tabuleiro[IDCasaTab + Diagonal + 9].Ocupado == false){
+                        AuxCasaSel = game.add.button(tabuleiro[IDCasaTab + Diagonal + 9].PosicaoX, tabuleiro[IDCasaTab + Diagonal + 9].PosicaoY, 'casaSelecionada', actionSelecionarCasa, this, 2, 1, 0);
 
+                        posicaoID = IDCasaTab + Diagonal + 9;
+                        console.log("Matando Peças Direita Baixo");
                         AuxCasaSel.data.Descricao = {
                             PecaId: peca,
                             PecaCor: 'Azul',
                             PosicaoId: posicaoID,
-                            Status: 'andar'
+                            Status: 'matar',
+                            Vitima: IDCasaTab + Diagonal
                         }
-
                         casaSel.push(AuxCasaSel);
                         AuxCasaSel.scale.setTo(0.95, 0.95);
-                        AuxCasaSel.alpha = 0.8;
-
+                        AuxCasaSel.alpha = 0.8;    
+                    }else{
+                        STOP = true;
+                    }
+                    }else{
+                        STOP = true;
                     }
                 
-            }
-         
-            if ( CasaNaoSelecionaveisDireita.indexOf(IDCasaTab) > -1 || CasaNaoSelecionaveisDireita.indexOf(IDCasaTab + Diagonal) > -1 ||
-             !(CasaNaoSelecionaveisParaMatarDireita.indexOf(IDCasaTab + Diagonal)) == -1 || LimitesTabuleiroBaixo.indexOf(IDCasaTab ) > -1 ||
-              LimitesTabuleiroBaixo.indexOf(IDCasaTab + Diagonal) > -1 || (IDCasaTab - Diagonal) > 62) {
-                DamaAndar = false
-            } else
-                if (tabuleiro[IDCasaTab + Diagonal].Ocupado) {
-                    DamaAndar = false
-                }
-            Diagonal += 9;
-
-        } while (DamaAndar)
-        Diagonal = 7;
-        DamaAndar = true;
-        do {//Desenha as casas para diagonal Esquerda baixo
-
-
-            console.log("Selecionando Cada Esquerda Baixo ..." + (IDCasaTab + Diagonal))
-            if(CasaNaoSelecionaveisEsquerda.indexOf(IDCasaTab) == -1  && LimitesTabuleiroBaixo.indexOf(IDCasaTab) == -1 ){
-            if (!tabuleiro[IDCasaTab + Diagonal].Ocupado  ) {
+            }else if (CasaNaoSelecionaveisEsquerda.indexOf(IDCasaTab) == -1  && LimitesTabuleiroBaixo.indexOf(IDCasaTab) == -1) {//Anda
                 AuxCasaSel = game.add.button(tabuleiro[IDCasaTab + Diagonal].PosicaoX, tabuleiro[IDCasaTab + Diagonal].PosicaoY, 'casaSelecionada', actionSelecionarCasa, this, 2, 1, 0);
                 posicaoID = IDCasaTab + Diagonal;
-               
+
                 AuxCasaSel.data.Descricao = {
                     PecaId: peca,
-                    PecaCor: 'Laranja',
+                    PecaCor: 'Azul',
                     PosicaoId: posicaoID,
                     Status: 'andar'
                 }
@@ -446,135 +437,30 @@ function actionOnClick(peca, a, b, c) {
                 casaSel.push(AuxCasaSel);
                 AuxCasaSel.scale.setTo(0.95, 0.95);
                 AuxCasaSel.alpha = 0.8;
-            }
-        }
-        /* var CasaNaoSelecionaveisEsquerda = [8,24,40, 56]*/
-            if (CasaNaoSelecionaveisEsquerda.indexOf(IDCasaTab) > -1 || CasaNaoSelecionaveisEsquerda.indexOf(IDCasaTab + Diagonal) > -1 ||
-             !CasaNaoSelecionaveisParaMatarEsquerda.indexOf(IDCasaTab + Diagonal) == -1 || LimitesTabuleiroBaixo.indexOf(IDCasaTab ) > -1 ||
-             LimitesTabuleiroBaixo.indexOf(IDCasaTab + Diagonal) > -1 || (IDCasaTab + Diagonal + 7) > 62) {
-                DamaAndar = false
-            } else
-                if (tabuleiro[IDCasaTab + Diagonal].Ocupado) {
-                    DamaAndar = false
-                }
-                Diagonal += 7;
-        } while (DamaAndar)
 
-        //Selecionando casas a cima
-        Diagonal = 7
-        DamaAndar = true;
-        do {////Desenha as casas para diagonal Direita Cima
-
-            console.log("Selecionando Cada Direita Cima ..." + (IDCasaTab + Diagonal))
-            if (CasaNaoSelecionaveisDireita.indexOf(IDCasaTab) == -1 && LimitesTabuleiroCima.indexOf(IDCasaTab) == -1 ) {
-                if (!tabuleiro[IDCasaTab - Diagonal].Ocupado) {
-                    AuxCasaSel = game.add.button(tabuleiro[IDCasaTab - Diagonal].PosicaoX, tabuleiro[IDCasaTab - Diagonal].PosicaoY, 'casaSelecionada', actionSelecionarCasa, this, 2, 1, 0);
-                    posicaoID = IDCasaTab - Diagonal;
-
-                    AuxCasaSel.data.Descricao = {
-                        PecaId: peca,
-                        PecaCor: 'Azul',
-                        PosicaoId: posicaoID,
-                        Status: 'andar'
-                    }
-
-                    casaSel.push(AuxCasaSel);
-                    AuxCasaSel.scale.setTo(0.95, 0.95);
-                    AuxCasaSel.alpha = 0.8;
-
-                
-
-            }else if (CasaNaoSelecionaveisParaMatarAmbosCima.indexOf(IDCasaTab) == -1 && CasaNaoSelecionaveisParaMatarDireita.indexOf(IDCasaTab) == -1) {
-                if (!tabuleiro[IDCasaTab - 14].Ocupado && CasaNaoSelecionaveisDireita.indexOf(IDCasaTab) == -1 ) {
-                    AuxCasaSel = game.add.button(tabuleiro[IDCasaTab - 14].PosicaoX, tabuleiro[IDCasaTab - 14].PosicaoY, 'casaSelecionada', actionSelecionarCasa, this, 2, 1, 0);
-
-                    posicaoID = IDCasaTab - 14;
-                    console.log("Matando Peças Direita");
-                    AuxCasaSel.data.Descricao = {
-                        PecaId: peca,
-                        PecaCor: 'Azul',
-                        PosicaoId: posicaoID,
-                        Status: 'matar',
-                        Vitima: IDCasaTab - 7
-                    }
-                    casaSel.push(AuxCasaSel);
-                    AuxCasaSel.scale.setTo(0.95, 0.95);
-                    AuxCasaSel.alpha = 0.8;
-
-                }else if(tabuleiro[IDCasaTab - 7].Ocupado && tabuleiro[IDCasaTab - 7].Ocupado){
-                    DamaAndar = false;
-                }
-            }
-            
-        }
-            if (CasaNaoSelecionaveisDireita.indexOf(IDCasaTab) > -1 || CasaNaoSelecionaveisDireita.indexOf(IDCasaTab - Diagonal) > -1 || 
-            CasaNaoSelecionaveisParaMatarDireita.indexOf(IDCasaTab) > -1 || LimitesTabuleiroCima.indexOf(IDCasaTab) > -1 ||
-             (IDCasaTab - Diagonal) < 1) {
-                DamaAndar = false
-            }/* else
-                if (tabuleiro[IDCasaTab - Diagonal].Ocupado) {
-                    DamaAndar = false
-                }*/
-                Diagonal += 7;
-        } while (DamaAndar)
-
-        Diagonal = 9;
-        DamaAndar = true;
-        do {  ////Desenha as casas para diagonal Esquerda Cima
-            console.log("Selecionando Cada Esquerda Cima ..." + (IDCasaTab + Diagonal))
-            if((CasaNaoSelecionaveisEsquerda.indexOf(IDCasaTab) == -1)  && LimitesTabuleiroCima.indexOf(IDCasaTab) == -1 ){
-            if (!tabuleiro[IDCasaTab - Diagonal].Ocupado ) {
-                AuxCasaSel = game.add.button(tabuleiro[IDCasaTab - Diagonal].PosicaoX, tabuleiro[IDCasaTab - Diagonal].PosicaoY, 'casaSelecionada', actionSelecionarCasa, this, 2, 1, 0);
-                posicaoID = IDCasaTab - Diagonal;
                
-                AuxCasaSel.data.Descricao = {
-                    PecaId: peca,
-                    PecaCor: 'Laranja',
-                    PosicaoId: posicaoID,
-                    Status: 'andar'
-                }
-
-                casaSel.push(AuxCasaSel);
-                AuxCasaSel.scale.setTo(0.95, 0.95);
-                AuxCasaSel.alpha = 0.8;
-            }else if (CasaNaoSelecionaveisParaMatarAmbosCima.indexOf(IDCasaTab) == -1) {
-
-                if (!tabuleiro[IDCasaTab - 18].Ocupado && CasaNaoSelecionaveisEsquerda.indexOf(IDCasaTab) == -1 ) {
-                    AuxCasaSel = game.add.button(tabuleiro[IDCasaTab - 18].PosicaoX, tabuleiro[IDCasaTab - 18].PosicaoY, 'casaSelecionada', actionSelecionarCasa, this, 2, 1, 0);
-                    posicaoID = IDCasaTab - 18;
-                    console.log("Matando Peças Esquerda");
-                    AuxCasaSel.data.Descricao = {
-                        PecaId: peca,
-                        PecaCor: 'Azul',
-                        PosicaoId: posicaoID,
-                        Status: 'matar',
-                        Vitima: IDCasaTab - 9
-                    }
-                    casaSel.push(AuxCasaSel);
-                    AuxCasaSel.scale.setTo(0.95, 0.95);
-                    AuxCasaSel.alpha = 0.8;
-
-                }else if(tabuleiro[IDCasaTab - 9].Ocupado && tabuleiro[IDCasaTab - 9].Ocupado){
-                    DamaAndar = false;
-                }
-
+            } else{
+                STOP = true;
             }
+
+
+            Diagonal += 9;
+
+        } else{
+            STOP = true;
         }
 
-
-            if (CasaNaoSelecionaveisEsquerda.indexOf(IDCasaTab) > -1 || CasaNaoSelecionaveisEsquerda.indexOf(IDCasaTab - Diagonal) > -1 ||
-             LimitesTabuleiroCima.indexOf(IDCasaTab) > -1 || LimitesTabuleiroCima.indexOf(IDCasaTab - Diagonal) > -1 ||
-              (IDCasaTab - Diagonal) < 1 ) {
-                DamaAndar = false
-            } /*else
-                if (tabuleiro[IDCasaTab - Diagonal].Ocupado) {
-                    DamaAndar = false
-                }*/
-                Diagonal += 9;
-        } while (DamaAndar)
-
-    }
+    
+    }while (STOP!=true)
+    
 }
+        
+}
+
+
+
+
+
 
 
 
