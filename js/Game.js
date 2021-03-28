@@ -158,7 +158,7 @@ function actionOnClick(peca, a, b, c) {
     var AuxCasaSel, posicaoID;
 
     // Peça Azul
-    if (jogando== 'Azul' && cor == 'Azul' && tipo == "Comum") {
+    if (/*jogando== 'Azul' &&*/ cor == 'Azul' && tipo == "Comum") {
         if (LimitesTabuleiroCima.indexOf(IDCasaTab) == -1) {
             if (!tabuleiro[IDCasaTab - 7].Ocupado && CasaNaoSelecionaveisDireita.indexOf(IDCasaTab) == -1) {
                 AuxCasaSel = game.add.button(tabuleiro[IDCasaTab - 7].PosicaoX, tabuleiro[IDCasaTab - 7].PosicaoY, 'casaSelecionada', actionSelecionarCasa, this, 2, 1, 0);
@@ -276,7 +276,7 @@ function actionOnClick(peca, a, b, c) {
 
 
     }//Final Peça azul
-    else if (jogando== 'Laranja' && cor == 'Laranja' && tipo == "Comum") {//Inicio Peça Laranja Comum
+    else if (/*jogando== 'Laranja' && */cor == 'Laranja' && tipo == "Comum") {//Inicio Peça Laranja Comum
         if (LimitesTabuleiroBaixo.indexOf(IDCasaTab) == -1) {
             if (CasaNaoSelecionaveisDireita.indexOf(IDCasaTab) == -1) {
                 if (!tabuleiro[IDCasaTab + 9].Ocupado) {
@@ -397,7 +397,7 @@ function actionOnClick(peca, a, b, c) {
 
 
     }//Final Peça Laranja
-    else if (jogando == cor && tipo == "Dama") {
+    else if (/*jogando == cor &&*/ tipo == "Dama") {
         var DiagonalCima, Diagonal = 9, DamaAndar = true;
 
         var temp;
@@ -409,7 +409,7 @@ function actionOnClick(peca, a, b, c) {
             if ( CasaNaoSelecionaveisDireita.indexOf(IDCasaTab ) == -1 && LimitesTabuleiroBaixo.indexOf(IDCasaTab ) == -1 ) {//[7, 23, 39, 55]
                 if(tabuleiro[IDCasaTab + Diagonal].Ocupado == true  ){//matar
 
-                    if (CasaNaoSelecionaveisParaMatarAmbosBaixo.indexOf(IDCasaTab) == -1 && CasaNaoSelecionaveisParaMatarDireita.indexOf(IDCasaTab + Diagonal) == -1 && cor != tabuleiro[IDCasaTab + Diagonal].Peca.data.Descricao.Cor){
+                    if (CasaNaoSelecionaveisParaMatarAmbosBaixo.indexOf(IDCasaTab) == -1 && CasaNaoSelecionaveisParaMatarDireita.indexOf(IDCasaTab) == -1 && cor != tabuleiro[IDCasaTab + Diagonal].Peca.data.Descricao.Cor){
                             if(LimitesTabuleiroBaixo.indexOf(IDCasaTab + Diagonal) == -1 &&
                             tabuleiro[IDCasaTab + Diagonal + 9].Ocupado == false){
                         
@@ -481,7 +481,8 @@ function actionOnClick(peca, a, b, c) {
                 STOP = true;
             }
 
-            if(CasaNaoSelecionaveisDireita.indexOf(IDCasaTab + Diagonal ) >= 0 || LimitesTabuleiroBaixo.indexOf(IDCasaTab + Diagonal ) >= 0){
+            if(CasaNaoSelecionaveisDireita.indexOf(IDCasaTab + Diagonal ) >= 0 || LimitesTabuleiroBaixo.indexOf(IDCasaTab + Diagonal ) >= 0
+            || CasaNaoSelecionaveisParaMatarDireita.indexOf(IDCasaTab + Diagonal) >= 0){
                 STOP = true;
             }
 
@@ -854,12 +855,12 @@ function actionSelecionarCasa(casa) {
         casa.data.Descricao.PecaId.data.Descricao.Tipo = "Dama";
         casa.data.Descricao.PecaId.loadTexture('pecaLaranjaDama');
     }
-
+/*
     if(jogando=='Azul'){
         jogando='Laranja';
     }else{
         jogando='Azul';
-    }
+    }*/
 
 
 }
