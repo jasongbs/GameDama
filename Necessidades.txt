@@ -1,4 +1,0 @@
-1- Corrigir quando chegar na borda do tabuleiro - OK
-2 - Transformar peça comum em dama. - OK
-1- Logica da Dama - Falta Comer
-2- Controle de vezes.. uma vez de cada.
