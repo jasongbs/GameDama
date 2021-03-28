@@ -3,20 +3,22 @@ var game = new Phaser.Game(1600, 800, Phaser.CANVAS, '', { preload: preload, cre
 
 function preload() {
 
-    game.load.image('casaPreta', 'assetsDama/CasaPreta.png');
-    game.load.image('casaBranca', 'assetsDama/CasaBranca.png');
-    //game.load.image('pecaAzul', 'assetsDama/PecaAzul.png');
-    //game.load.image('pecaAzulDama', 'assetsDama/DamaAzul.png');
-    //game.load.image('pecaLaranja', 'assetsDama/PecaLaranja.png');
-    game.load.image('casaSelecionada', 'assetsDama/casaSelecionada.png', 10, 10);
-    game.load.spritesheet('pecaLaranja', 'assetsDama/PecaLaranja.png');
-    game.load.spritesheet('pecaAzul', 'assetsDama/PecaAzul.png');
-    game.load.spritesheet('pecaLaranjaDama', 'assetsDama/PecaLaranjaDama.png');
-    game.load.spritesheet('pecaAzulDama', 'assetsDama/PecaAzulDama.png');
+    game.load.image('casaPreta', 'assetsDama/Tabuleiro/CasaPreta.png');
+    game.load.image('casaBranca', 'assetsDama/Tabuleiro/CasaBranca.png');
+    game.load.image('casaSelecionada', 'assetsDama/Tabuleiro/casaSelecionada.png', 10, 10);
+    game.load.image('laranjaVenceu', 'assetsDama/Encerramento/LaranjaVenceu.png');
+    game.load.image('azulVenceu', 'assetsDama/Encerramento/AzulVenceu.png');
+    game.load.spritesheet('pecaLaranja', 'assetsDama/Peças/PecaLaranja.png');
+    game.load.spritesheet('pecaAzul', 'assetsDama/Peças/PecaAzul.png');
+    game.load.spritesheet('pecaLaranjaDama', 'assetsDama/Peças/PecaLaranjaDama.png');
+    game.load.spritesheet('pecaAzulDama', 'assetsDama/Peças/PecaAzulDama.png');
+    game.load.audio('movimentoPeca','assetsDama/Sons/somPeca.mp3');
 }
+var emAndamento = true;
+var qtdLaranja = 12, qtdAzul = 12;
 var jogando;
 var casas;
-var posicaoTabx = 0, posicaoTaby = 50;
+var posicaoTabx = 400, posicaoTaby = 50;
 var tabuleiro = [];
 var pecas = [];
 var auxCasas = 0;
@@ -25,6 +27,7 @@ var vitimaEB=[],vitimaEC=[],vitimaDB=[],vitimaDC=[];
 var pecaMorta = [];
 var LimitesTabuleiroCima = [1, 3, 5, 7];
 var LimitesTabuleiroBaixo = [56, 58, 60, 62];
+var audio;
 
 
 function create() {
@@ -135,7 +138,7 @@ function create() {
 }
 
 function actionOnClick(peca, a, b, c) {
-
+    audio = game.add.audio('movimentoPeca');
     var CasaNaoSelecionaveisEsquerda = [8,24,40, 56];
     var CasaNaoSelecionaveisDireita = [7, 23, 39, 55];
 
@@ -427,7 +430,7 @@ function actionOnClick(peca, a, b, c) {
                             PosicaoId: posicaoID,
                             Status: 'matar',
                             Vitima: IDCasaTab + Diagonal,
-                            Direncao: 'DB'
+                            Direcao: 'DB'
                         });
                         AuxCasaSel.data.Descricao = {
                             PecaId: peca,
@@ -435,7 +438,7 @@ function actionOnClick(peca, a, b, c) {
                             PosicaoId: posicaoID,
                             Status: 'matar',
                             Vitima: vitimaDB,
-                            Direncao: 'DB'
+                            Direcao: 'DB'
                         }
                         
                         console.log(vitimaDB);
@@ -471,7 +474,7 @@ function actionOnClick(peca, a, b, c) {
                         PosicaoId: posicaoID,
                         Status: 'matar',
                         Vitima:  vitimaDB,
-                        Direncao: 'DB'
+                        Direcao: 'DB'
                 }
             }
 
@@ -528,7 +531,7 @@ function actionOnClick(peca, a, b, c) {
                         PosicaoId: posicaoID,
                         Status: 'matar',
                         Vitima: IDCasaTab - Diagonal,
-                        Direncao: 'DC'
+                        Direcao: 'DC'
                     });
 
                     console.log("Matando Peças Direita Cima");
@@ -538,7 +541,7 @@ function actionOnClick(peca, a, b, c) {
                         PosicaoId: posicaoID,
                         Status: 'matar',
                         Vitima: vitimaDC,
-                        Direncao: 'DC'
+                        Direcao: 'DC'
                     }
                    
                     console.log(vitimaDC);
@@ -571,7 +574,7 @@ function actionOnClick(peca, a, b, c) {
                     PosicaoId: posicaoID,
                     Status: 'matar',
                     Vitima:  vitimaDC,
-                    Direncao: 'DC'
+                    Direcao: 'DC'
             }
         }
             casaSel.push(AuxCasaSel);
@@ -623,7 +626,7 @@ do {
                     PosicaoId: posicaoID,
                     Status: 'matar',
                     Vitima: IDCasaTab - Diagonal,
-                    Direncao: 'EC'
+                    Direcao: 'EC'
                 });
 
                
@@ -634,7 +637,7 @@ do {
                     PosicaoId: posicaoID,
                     Status: 'matar',
                     Vitima: vitimaEC,
-                    Direncao: 'EC'
+                    Direcao: 'EC'
                 }
                 
 
@@ -669,7 +672,7 @@ do {
                     PosicaoId: posicaoID,
                     Status: 'matar',
                     Vitima:  vitimaEC,
-                    Direncao: 'EC'
+                    Direcao: 'EC'
             }
         }
 
@@ -724,7 +727,7 @@ do {
                     PosicaoId: posicaoID,
                     Status: 'matar',
                     Vitima: IDCasaTab + Diagonal,
-                    Direncao: 'EB'
+                    Direcao: 'EB'
                 });
 
                   console.log("Matando Peças Direita Baixo");
@@ -734,7 +737,7 @@ do {
                       PosicaoId: posicaoID,
                       Status: 'matar',
                       Vitima: vitimaEB,
-                      Direncao: 'EB'
+                      Direcao: 'EB'
                   }
                   
                 console.log(vitimaEB);
@@ -768,7 +771,7 @@ do {
                     PosicaoId: posicaoID,
                     Status: 'matar',
                     Vitima:  vitimaEB,
-                    Direncao: 'EB'
+                    Direcao: 'EB'
             }
         }
 
@@ -800,40 +803,72 @@ do {
         
 }
 
-
 function actionSelecionarCasa(casa) {
 
-    if (casa.data.Descricao.Status == "matar" && casa.data.Descricao.Direncao == "DB" || casa.data.Descricao.Direncao == "EB") {
+    
+     
+    audio.play();
+
+    if (casa.data.Descricao.Status == "matar" && casa.data.Descricao.Direcao == "DB" || casa.data.Descricao.Direcao == "EB") {
         casa.data.Descricao.Vitima.forEach(
             function (vitimaSelecionada) {
                 if(casa.data.Descricao.PosicaoId>vitimaSelecionada.Vitima){
             pecaMorta.push(tabuleiro[vitimaSelecionada.Vitima].Peca)
+            
+            if(tabuleiro[vitimaSelecionada.Vitima].Peca.data.Descricao.Cor=="Laranja")
+            qtdLaranja--;
+            else if(tabuleiro[vitimaSelecionada.Vitima].Peca.data.Descricao.Cor=="Azul")
+            qtdAzul--;
+
             tabuleiro[vitimaSelecionada.PosicaoId].Ocupado = false;
         
             tabuleiro[vitimaSelecionada.Vitima].Ocupado = false;
             tabuleiro[vitimaSelecionada.Vitima].Peca = null;
-        
-            pecaMorta.forEach(function (item) { item.kill(); });
+            
+           
+            pecaMorta.forEach(function (item) {
+              
+                item.kill();
+                
+            });
             }
         });
-    }else if (casa.data.Descricao.Status == "matar" && casa.data.Descricao.Direncao == "DC" || casa.data.Descricao.Direncao == "EC" ) {
+    }else if (casa.data.Descricao.Status == "matar" && casa.data.Descricao.Direcao == "DC" || casa.data.Descricao.Direcao == "EC" ) {
         casa.data.Descricao.Vitima.forEach(
             function (vitimaSelecionada) {
                 if(casa.data.Descricao.PosicaoId<vitimaSelecionada.Vitima){
             pecaMorta.push(tabuleiro[vitimaSelecionada.Vitima].Peca)
+
+            if(tabuleiro[vitimaSelecionada.Vitima].Peca.data.Descricao.Cor=="Laranja")
+            qtdLaranja--;
+            else if(tabuleiro[vitimaSelecionada.Vitima].Peca.data.Descricao.Cor=="Azul")
+            qtdAzul--;
+
             tabuleiro[vitimaSelecionada.PosicaoId].Ocupado = false;
         
             tabuleiro[vitimaSelecionada.Vitima].Ocupado = false;
             tabuleiro[vitimaSelecionada.Vitima].Peca = null;
-        
-            pecaMorta.forEach(function (item) { item.kill(); });
+                    
+           
+
+            pecaMorta.forEach(function (item) { 
+               
+                item.kill(); });
             }
         });
     }else  if (casa.data.Descricao.Status == "matar") {
         pecaMorta.push(tabuleiro[casa.data.Descricao.Vitima].Peca)
+
+        if(tabuleiro[casa.data.Descricao.Vitima].Peca.data.Descricao.Cor=="Laranja")
+            qtdLaranja--;
+        else if(tabuleiro[casa.data.Descricao.Vitima].Peca.data.Descricao.Cor=="Azul")
+            qtdAzul--;
+
         tabuleiro[casa.data.Descricao.Vitima].Ocupado = false;
         tabuleiro[casa.data.Descricao.Vitima].Ocupado = false;
-        pecaMorta.forEach(function (item) { item.kill(); });
+
+        pecaMorta.forEach(function (item) { 
+            item.kill(); });
     }
 
     casa.data.Descricao.PecaId.x = tabuleiro[casa.data.Descricao.PosicaoId].PosicaoX + 8;
@@ -868,10 +903,21 @@ function actionSelecionarCasa(casa) {
 
 }
 
+
+
 function update() {
 
-
-
+    if(qtdLaranja==0 && emAndamento == true){
+        emAndamento = false;
+        var image = game.add.image(posicaoTabx, 25, 'azulVenceu');
+        image.scale.setTo(1.6, 1.6);
+        console.log("Azul Ganhou!!!");
+    }else if(qtdAzul==0 && emAndamento == true){
+        emAndamento = false;
+        var image = game.add.image(posicaoTabx, 25, 'laranjaVenceu');
+        image.scale.setTo(1.6, 1.6);
+        console.log("Laranja Ganhou!!!");
+    }
 }
 
 
