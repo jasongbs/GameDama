@@ -409,7 +409,10 @@ function actionOnClick(peca, a, b, c) {
             if ( CasaNaoSelecionaveisDireita.indexOf(IDCasaTab ) == -1 && LimitesTabuleiroBaixo.indexOf(IDCasaTab ) == -1 ) {//[7, 23, 39, 55]
                 if(tabuleiro[IDCasaTab + Diagonal].Ocupado == true  ){//matar
 
-                    if (CasaNaoSelecionaveisParaMatarAmbosBaixo.indexOf(IDCasaTab) == -1 && CasaNaoSelecionaveisParaMatarDireita.indexOf(IDCasaTab) == -1 && cor != tabuleiro[IDCasaTab + Diagonal].Peca.data.Descricao.Cor){
+                    if (CasaNaoSelecionaveisParaMatarAmbosBaixo.indexOf(IDCasaTab) == -1 &&
+                     CasaNaoSelecionaveisParaMatarDireita.indexOf(IDCasaTab) == -1 &&
+                      cor != tabuleiro[IDCasaTab + Diagonal].Peca.data.Descricao.Cor &&
+                      CasaNaoSelecionaveisDireita.indexOf(IDCasaTab + Diagonal ) == -1 ){
                             if(LimitesTabuleiroBaixo.indexOf(IDCasaTab + Diagonal) == -1 &&
                             tabuleiro[IDCasaTab + Diagonal + 9].Ocupado == false){
                         
@@ -482,7 +485,7 @@ function actionOnClick(peca, a, b, c) {
             }
 
             if(CasaNaoSelecionaveisDireita.indexOf(IDCasaTab + Diagonal ) >= 0 || LimitesTabuleiroBaixo.indexOf(IDCasaTab + Diagonal ) >= 0
-            || CasaNaoSelecionaveisParaMatarDireita.indexOf(IDCasaTab + Diagonal) >= 0){
+            /*|| CasaNaoSelecionaveisParaMatarDireita.indexOf(IDCasaTab + Diagonal) >= 0*/){
                 STOP = true;
             }
 
