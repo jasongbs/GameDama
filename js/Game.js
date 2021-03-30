@@ -355,7 +355,7 @@ function actionOnClick(peca) {
 
         //Come Peças para trás Direita
         if (CasaNaoSelecionaveisParaMatarAmbosCima.indexOf(IDCasaTab) == -1 && CasaNaoSelecionaveisParaMatarEsquerda.indexOf(IDCasaTab) == -1) {
-            if (!tabuleiro[IDCasaTab - 18].Ocupado && tabuleiro[IDCasaTab - 9].Ocupado && CasaNaoSelecionaveisEsquerda.indexOf(IDCasaTab) == -1 && CasaNaoSelecionaveisParaMatarDireitaLaranja.indexOf(IDCasaTab) == -1) {
+            if (!tabuleiro[IDCasaTab - 18].Ocupado && tabuleiro[IDCasaTab - 9].Ocupado && CasaNaoSelecionaveisEsquerda.indexOf(IDCasaTab) == -1 && CasaNaoSelecionaveisParaMatarEsquerda.indexOf(IDCasaTab - 9) == -1) {
                 if (tabuleiro[IDCasaTab - 9].Peca.data.Descricao.Cor == 'Azul') {
                     AuxCasaSel = game.add.button(tabuleiro[IDCasaTab - 18].PosicaoX, tabuleiro[IDCasaTab - 18].PosicaoY, 'casaSelecionada', actionSelecionarCasa, this, 2, 1, 0);
                     posicaoID = IDCasaTab - 18;
